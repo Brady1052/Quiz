@@ -2,22 +2,24 @@ var startPage = document.getElementById("startPage")
 var quiz = document.getElementById("quiz")
 var counter = 0;
 var score = 0;
+var correctAnswerArray = ["c","c","c"]
+var choResponseArray = ['','','']
 
-function timer(){
-  var sec = 15;
-  var timer = setInterval(function(){
-      document.getElementById('safeTimerDisplay').innerHTML='00:'+sec;
-      sec--;
-      if (sec < 0) {
-          clearInterval(timer);
-      }
-  }, 1000);
-}
+// for (var i = 0; i< myQuestions.length; i++){
+// var response = (myQuestions.answers)
+// }
 function buildQuiz(){  
-  startPage.style.display = "none"
-    displayQuestion()
-    timer()
+  startPage.style.display ="none"
+  displayQuestion()
+  timer()
+  console.log(choResponseArray)
 }
+
+// cBtn.addEventListener("click", function(event){
+// choResponseArray = "c";
+// console.log("c");
+
+// }
 
 // for(var i = 0; i < myQuestions.length; i++){
 //   var response = (questions[i].prompt);
@@ -29,32 +31,59 @@ function buildQuiz(){
 //   }
 // }
 // alert("you got " + score + "/" + questions.length);
-
+function aBt(){
+  console.log("a");
+  choAnswerArray = "a";
+  console.log(choResponseArray);
+}
+function bBt(){
+  console.log("b");
+  choResponseArray = "b";
+  console.log(choResponseArray);
+}
+function cBt(){
+  console.log("c");
+  choResponseArray = "c";
+  console.log(choResponseArray);
+}
 function displayQuestion(){
     
     quiz.innerHTML = ("")
     var titleEl = document.createElement("h2")
     titleEl.innerHTML = myQuestions[counter].question
-    
-    
-    var button  = document.createElement("button")
-    var button1 = document.createElement("button")
-    var button2 = document.createElement("button")  
-    var choices = [button,button1,button2]
-    
+    var aBtn = document.createElement("button")
+    var bBtn = document.createElement("button")
+    var cBtn = document.createElement("button")  
+  
+    aBtn.innerHTML = myQuestions[counter].answers.a
+    bBtn.innerHTML = myQuestions[counter].answers.b
+    cBtn.innerHTML = myQuestions[counter].answers.c
    
-    button.innerHTML  = myQuestions[counter].answers.a
-    button1.innerHTML = myQuestions[counter].answers.b
-    button2.innerHTML = myQuestions[counter].answers.c
-   
-    button.addEventListener ("click", showNextQuestion);
-   button1.addEventListener ("click", showNextQuestion);
-   button2.addEventListener ("click", showNextQuestion);
+    aBtn.addEventListener ("click", showNextQuestion);
+    bBtn.addEventListener ("click", showNextQuestion);
+    cBtn.addEventListener ("click", showNextQuestion);
     
+    aBtn.addEventListener ("click", aBt)
+    bBtn.addEventListener ("click", bBt)
+    cBtn.addEventListener ("click", cBt)
+
     quiz.appendChild(titleEl)
-    quiz.appendChild(button)
-    quiz.appendChild(button1)
-    quiz.appendChild(button2)
+    quiz.appendChild(aBtn)
+    quiz.appendChild(bBtn)
+    quiz.appendChild(cBtn)
+}
+
+function timer(){
+  safeTimerDisplay.innerHTML = ("")
+  var sec = 15;
+  var timer = setInterval(function(){
+      document.getElementById('safeTimerDisplay').innerHTML='00:'+sec;
+      sec--;
+      if (sec <= 0) {
+         clearInterval(timer);
+         alert("You ran out of time!")
+      }
+  }, 1000);
 }
 
 function showNextQuestion() {
@@ -97,7 +126,7 @@ displayQuestion()
   // }
 
   
-const myQuestions = [
+var myQuestions = [
   {
     question: "Who invented JavaScript?",
     answers: {
@@ -106,7 +135,7 @@ const myQuestions = [
       c: "Brendan Eich"
     },
     correctAnswer: "c"
-  },
+     },
   {
     question: "Which one of these is a JavaScript package manager?",
     answers: {
@@ -126,33 +155,6 @@ const myQuestions = [
     correctAnswer: "c"
   }
 ]
-  // Kick things off
+// Kick things off
   var startButton = document.getElementById('startButton')
   startButton.addEventListener('click', buildQuiz)
-
-// var questions = [
-//   {
-//         prompt: "What color are apples?\n(a) Red/Green\n\ (b) Purple\n(c) Orange",
-//         answer: "a"
-//   },
-//   {
-//        prompt: "What color are Bananas?\n(a) Teal\n\ (b) Magenta\n(c) Yellow",
-//        answer: "c"
-//   },
-//   {
-//        prompt: "What color are strawberries?\n(a) Yellow\n\ (b) Red\n(c) Blue",
-//        answer: "a"
-//   }
-// ];
-// var score = 0;
-
-// for(var i = 0; i < questions.length; i++){
-//   var response = window.prompt(questions[i].prompt);
-//   if(response == questions[i].answer){
-//        score++;
-//        alert("Correct!");
-//   } else {
-//        alert("WRONG!");
-//   }
-// }
-// alert("you got " + score + "/" + questions.length);
