@@ -2,38 +2,22 @@ var startPage = document.getElementById("startPage")
 var quiz = document.getElementById("quiz")
 var counter = 0;
 var score = 0;
-var correctAnswerArray = ["c","c","c"]
+var correctAnswerArray = myQuestions
 var choResponseArray = ['','','']
 
-// for (var i = 0; i< myQuestions.length; i++){
-// var response = (myQuestions.answers)
-// }
+function displayHome (){
+  startPage.style.display ="initial"
+  document.getElementById('timer').style.display ="none"
+}
+
 function buildQuiz(){  
   startPage.style.display ="none"
   displayQuestion()
   timer()
-  console.log(choResponseArray)
 }
-
-// cBtn.addEventListener("click", function(event){
-// choResponseArray = "c";
-// console.log("c");
-
-// }
-
-// for(var i = 0; i < myQuestions.length; i++){
-//   var response = (questions[i].prompt);
-//   if(response == correctAnswer[i].answer){
-//        score++;
-//        alert("Correct!");
-//   } else {
-//        alert("WRONG!");
-//   }
-// }
-// alert("you got " + score + "/" + questions.length);
 function aBt(){
   console.log("a");
-  choAnswerArray = "a";
+  choResponseArray = "a";
   console.log(choResponseArray);
 }
 function bBt(){
@@ -46,11 +30,14 @@ function cBt(){
   choResponseArray = "c";
   console.log(choResponseArray);
 }
+if (choResponseArray == correctAnswerArray){
+  alert("you got it right!")
+}
 function displayQuestion(){
-    
+    console.log(myQuestions.length)
     quiz.innerHTML = ("")
     var titleEl = document.createElement("h2")
-    titleEl.innerHTML = myQuestions[counter].question
+    titleEl.textContent = myQuestions[counter].question
     var aBtn = document.createElement("button")
     var bBtn = document.createElement("button")
     var cBtn = document.createElement("button")  
@@ -72,26 +59,38 @@ function displayQuestion(){
     quiz.appendChild(bBtn)
     quiz.appendChild(cBtn)
 }
-
+function endQuiz(){
+  
+}
 function timer(){
-  safeTimerDisplay.innerHTML = ("")
   var sec = 15;
   var timer = setInterval(function(){
-      document.getElementById('safeTimerDisplay').innerHTML='00:'+sec;
+      document.getElementById('timer').innerHTML='00:'+sec;
       sec--;
-      if (sec <= 0) {
+      if (sec <= -1) {
          clearInterval(timer);
          alert("You ran out of time!")
+         showResults()
       }
   }, 1000);
 }
 
 function showNextQuestion() {
 counter ++;
+console.log(counter)
+if (counter === myQuestions.length){
+ displayHome()
+}
 displayQuestion()
 }
+function scoreTracker(){
+choResponseArray.push('Hello')
+console.log(choResponseArray)
+}
 
-  // function showResults(){
+  function showResults(){
+    console.log('showResults')
+  }
 //     // gather answer containers from our quiz
 //     const answerContainers = quizContainer.querySelectorAll('.answers');
   
