@@ -72,7 +72,11 @@ function timer(){
          alert("You ran out of time!")
          showResults()
       }
+      if (counter === myQuestions.length){
+        clearInterval(timer)
+      }
   }, 1000);
+  
 }
 
 function showNextQuestion() {
@@ -80,6 +84,7 @@ counter ++;
 console.log(counter)
 if (counter === myQuestions.length){
  displayHome()
+ 
 }
 displayQuestion()
 }
