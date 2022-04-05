@@ -1,9 +1,9 @@
 var startPage = document.getElementById("startPage")
 var quiz = document.getElementById("quiz")
+var body = document.getElementById("body")
 var counter = 0;
 var score = 0;
-var correctAnswerArray = myQuestions
-var choResponseArray = ['','','']
+var choResponseArray = []
 
 function displayHome (){
   startPage.style.display ="initial"
@@ -15,26 +15,8 @@ function buildQuiz(){
   displayQuestion()
   timer()
 }
-function aBt(){
-  console.log("a");
-  choResponseArray = "a";
-  console.log(choResponseArray);
-}
-function bBt(){
-  console.log("b");
-  choResponseArray = "b";
-  console.log(choResponseArray);
-}
-function cBt(){
-  console.log("c");
-  choResponseArray = "c";
-  console.log(choResponseArray);
-}
-if (choResponseArray == correctAnswerArray){
-  alert("you got it right!")
-}
+
 function displayQuestion(){
-    console.log(myQuestions.length)
     quiz.innerHTML = ("")
     var titleEl = document.createElement("h2")
     titleEl.textContent = myQuestions[counter].question
@@ -49,19 +31,34 @@ function displayQuestion(){
     aBtn.addEventListener ("click", showNextQuestion);
     bBtn.addEventListener ("click", showNextQuestion);
     cBtn.addEventListener ("click", showNextQuestion);
-    
-    aBtn.addEventListener ("click", aBt)
-    bBtn.addEventListener ("click", bBt)
-    cBtn.addEventListener ("click", cBt)
 
+    aBtn.addEventListener("click", aAnswer)
+    bBtn.addEventListener("click", bAnswer)
+    cBtn.addEventListener("click", cAnswer)
+
+    aBtn.addEventListener ("click", scoreTracker);
+    bBtn.addEventListener ("click", scoreTracker);
+    cBtn.addEventListener ("click", scoreTracker);
+    
     quiz.appendChild(titleEl)
     quiz.appendChild(aBtn)
     quiz.appendChild(bBtn)
     quiz.appendChild(cBtn)
 }
-function endQuiz(){
-  
+function aAnswer (){
+choResponseArray.pop()
+choResponseArray.push('a')
+
 }
+function bAnswer (){
+ choResponseArray.pop()
+ choResponseArray.push('b')
+}
+function cAnswer (){
+choResponseArray.pop();
+choResponseArray.push('c')
+}
+
 function timer(){
   var sec = 15;
   var timer = setInterval(function(){
@@ -70,10 +67,15 @@ function timer(){
       if (sec <= -1) {
          clearInterval(timer);
          alert("You ran out of time!")
+         document.getElementById('timer').innerHTML=''
          showResults()
+         return;
       }
       if (counter === myQuestions.length){
         clearInterval(timer)
+        
+        showResults()
+        return;
       }
   }, 1000);
   
@@ -81,54 +83,30 @@ function timer(){
 
 function showNextQuestion() {
 counter ++;
-console.log(counter)
-if (counter === myQuestions.length){
- displayHome()
- 
-}
+if (counter >= myQuestions.length){
+ showResults()
+} else {
 displayQuestion()
+  }
 }
+
 function scoreTracker(){
-choResponseArray.push('Hello')
-console.log(choResponseArray)
+for (i=0; i < myQuestions[i].correctAnswer.length; i++){
+var correctAnswer = myQuestions[i].correctAnswer;
+console.log(correctAnswer)
+var string = choResponseArray.join('')
+console.log(string)
+if(string === correctAnswer){
+  score++;
+}
+
+}
 }
 
   function showResults(){
-    console.log('showResults')
+    console.log(score)
+    body.innerHTML=""
   }
-//     // gather answer containers from our quiz
-//     const answerContainers = quizContainer.querySelectorAll('.answers');
-  
-//     // keep track of user's answers
-//     let numCorrect = 0;
-  
-//     // for each question...
-//     myQuestions.forEach( (currentQuestion, questionNumber) => {
-  
-//       // find selected answer
-//       const answerContainer = answerContainers[questionNumber];
-//       const selector = `input[name=question${questionNumber}]:checked`;
-//       const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-  
-//       // if answer is correct
-//       if(userAnswer === currentQuestion.correctAnswer){
-//         // add to the number of correct answers
-//         numCorrect++;
-  
-//         // color the answers green
-//         answerContainers[questionNumber].style.color = 'lightgreen';
-//       }
-//       // if answer is wrong or blank
-//       else{
-//         // color the answers red
-//         answerContainers[questionNumber].style.color = 'red';
-//       }
-//     });
-  
-  //   // show number of correct answers out of total
-  //   resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-  // }
-
   
 var myQuestions = [
   {
@@ -159,6 +137,7 @@ var myQuestions = [
     correctAnswer: "c"
   }
 ]
+
 // Kick things off
   var startButton = document.getElementById('startButton')
   startButton.addEventListener('click', buildQuiz)
